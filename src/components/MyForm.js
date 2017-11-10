@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default ({ onClick }) => (
+export default ({ myEvent }) => (
   <div>
     <input type="text" />
-    <button onClick={onClick}>Add</button>
+    <button onClick={myEvent}>Add</button>
   </div>
 )

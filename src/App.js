@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import MyForm from './components/MyForm';
+import React, { Component } from 'react'
+import MyForm from './components/MyForm'
 import v4 from 'uuid/v4'
 
 
@@ -10,15 +10,17 @@ class App extends Component {
     this.state = {
       tasks: [
         {
-          id:
+          id: v4(),
           completed: false,
           description: 'My Task 1'
         },
         {
+          id: v4(),
           completed: false,
           description: 'My Task 2'
         },
         {
+          id: v4(),
           completed: false,
           description: 'My Task 3'
         }
@@ -26,34 +28,44 @@ class App extends Component {
     }
   }
 
+  toggleTask(state, id) {
+    const { tasks } = state
+    const newTasks = tasks.map(task => {
+      if (task.id !== id) return { ...task }
+      return { ...task, completed: !task.completed }
+    })
+    return { ...state, tasks: newTasks }
+  }
+
+  addTask() {
+    const { tasks } = this.state
+    const newTasks = [...tasks, { id: v4(), completed: false, description: 'My New Task!!!' }]
+    console.log(newTasks)
+    this.setState({ ...this.state, tasks: newTasks })
+  }
+
   render() {
     const { tasks } = this.state
+    const that = this
     return (
       <div>
-        <MyForm />
-        <ul>{tasks.map(function (task, key) {　/* JS ここから */
-          /* React ここから */
-          return (
-            <li key={key} style={{
-              textDecoration: task.completed ? 'line-through' : 'none'
-            }}
-              onClick={() => {
-                if ()
-              }
+        <MyForm myEvent={() => this.addTask()} />
 
-
-
-                this.setState({
-              task: {
-                completed: !task.completed,
-                description: task.description
-              }
-            })
-        } >
-          { task.description }
-            </li>
-          )
-        })}
+        <ul>
+          {tasks.map(function (task) {　/* JS ここから */
+            /* React ここから */
+            return (
+              <li key={task.id} style={{
+                textDecoration: task.completed ? 'line-through' : 'none'
+              }}
+                onClick={() => {
+                  that.setState(that.toggleTask(that.state, task.id))
+                }
+                }>
+                {task.description}
+              </li>
+            )
+          })}
         </ul>
       </div>
     );
