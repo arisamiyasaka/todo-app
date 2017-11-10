@@ -7,24 +7,14 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      tasks: [
-        {
-          id: v4(),
-          completed: false,
-          description: 'My Task 1'
-        },
-        {
-          id: v4(),
-          completed: false,
-          description: 'My Task 2'
-        },
-        {
-          id: v4(),
-          completed: false,
-          description: 'My Task 3'
-        }
-      ]
+    const serializedState = localStorage.getItem('myTodo')
+    let persistState = null
+    if (serializedState !== null) {
+      persistState = JSON.parse(serializedState)
+    }
+
+    this.state = persistState ? persistState : {
+      tasks: []
     }
   }
 
@@ -34,13 +24,18 @@ class App extends Component {
       if (task.id !== id) return { ...task }
       return { ...task, completed: !task.completed }
     })
-    return { ...state, tasks: newTasks }
+    const newState = { ...state, tasks: newTasks }
+    localStorage.setItem('myTodo', JSON.stringify(newState))
+    return newState
   }
 
   addTask(description = 'New Task!') {
     const { tasks } = this.state
     const newTasks = [...tasks, { id: v4(), completed: false, description: description }]
-    this.setState({ ...this.state, tasks: newTasks })
+    const newState = { ...this.state, tasks: newTasks }
+    localStorage.setItem('myTodo', JSON.stringify(newState))
+
+    this.setState(newState)
   }
 
   render() {
