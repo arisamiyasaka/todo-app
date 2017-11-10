@@ -37,10 +37,9 @@ class App extends Component {
     return { ...state, tasks: newTasks }
   }
 
-  addTask() {
+  addTask(description = 'New Task!') {
     const { tasks } = this.state
-    const newTasks = [...tasks, { id: v4(), completed: false, description: 'My New Task!!!' }]
-    console.log(newTasks)
+    const newTasks = [...tasks, { id: v4(), completed: false, description: description }]
     this.setState({ ...this.state, tasks: newTasks })
   }
 
@@ -49,7 +48,7 @@ class App extends Component {
     const that = this
     return (
       <div>
-        <MyForm myEvent={() => this.addTask()} />
+        <MyForm myEvent={(desc) => this.addTask(desc)} />
 
         <ul>
           {tasks.map(function (task) {　/* JS ここから */
