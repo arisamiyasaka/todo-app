@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MyForm from './components/MyForm'
 import ToggleButton from './components/ToggleButton'
+import Todo from './components/Todo'
 import v4 from 'uuid/v4'
 
 
@@ -15,7 +16,23 @@ class App extends Component {
     }
 
     this.state = {
-      tasks: [],
+      tasks: [
+        {
+          id: v4(),
+          description: 'My todo 1',
+          completed: false
+        },
+        {
+          id: v4(),
+          description: 'My todo 2',
+          completed: false
+        },
+        {
+          id: v4(),
+          description: 'My todo 3',
+          completed: false
+        }
+      ],
       current: 'all',
     }
   }
@@ -43,7 +60,6 @@ class App extends Component {
     return (
       <div>
         <MyForm myEvent={desc => this.addTask(desc)} />
-
         <ul>
           {tasks.filter(({ completed }) => {
             switch (current) {
@@ -55,14 +71,11 @@ class App extends Component {
                 return true
             }
           }).
-            map(({ id, completed, description }) => (
-              <li
-                key={id}
-                style={{ textDecoration: completed ? 'line-through' : 'none' }}
-                onClick={() => this.setState(this.toggleTask(this.state, id))}
-              >
-                {description}
-              </li>
+            map((attr) => (
+              <Todo
+                attr={attr}
+                onClickHandler={() =>
+                  this.setState(this.toggleTask(this.state, attr.id))} />
             ))}
         </ul>
         <p>{this.state.current}</p>
