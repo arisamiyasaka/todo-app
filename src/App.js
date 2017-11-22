@@ -46,9 +46,14 @@ class App extends Component {
 
         <ul>
           {tasks.filter(({ completed }) => {
-            if (current === 'done') return completed
-            else if (current === 'not yet') return !completed
-            else return true
+            switch (current) {
+              case 'done':
+                return completed
+              case 'not yet':
+                return !completed
+              default:
+                return true
+            }
           }).
             map(({ id, completed, description }) => (
               <li
