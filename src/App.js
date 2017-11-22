@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MyForm from './components/MyForm'
+import ToggleButton from './components/ToggleButton'
 import v4 from 'uuid/v4'
 
 
@@ -13,8 +14,9 @@ class App extends Component {
       persistState = JSON.parse(serializedState)
     }
 
-    this.state = persistState ? persistState : {
-      tasks: []
+    this.state = {
+      tasks: [],
+      current: 'all',
     }
   }
 
@@ -37,23 +39,38 @@ class App extends Component {
   }
 
   render() {
-    const { tasks } = this.state
+    const { tasks, current } = this.state
     return (
       <div>
         <MyForm myEvent={desc => this.addTask(desc)} />
 
         <ul>
-          {tasks.map(({ id, completed, description }) => (
-            <li
-              key={id}
-              style={{ textDecoration: completed ? 'line-through' : 'none' }}
-              onClick={() => this.setState(this.toggleTask(this.state, id))}
-            >
-              {description}
-            </li>
-          ))}
+          {tasks.filter(({ completed }) => {
+            if (current === 'done') return completed
+            else if (current === 'not yet') return !completed
+            else if (current === 'all') return true
+          }).
+            map(({ id, completed, description }) => (
+              <li
+                key={id}
+                style={{ textDecoration: completed ? 'line-through' : 'none' }}
+                onClick={() => this.setState(this.toggleTask(this.state, id))}
+              >
+                {description}
+              </li>
+            ))}
         </ul>
-      </div>
+        <p>{this.state.current}</p>
+        <ToggleButton onClick={() => this.setState(prev => {
+          return { ...prev, current: 'done' }
+        })}>done</ToggleButton>
+        <ToggleButton onClick={() => this.setState(prev => {
+          return { ...prev, current: 'not yet' }
+        })}>not yet</ToggleButton>
+        <ToggleButton onClick={() => this.setState(prev => {
+          return { ...prev, current: 'all' }
+        })}>all</ToggleButton>
+      </div >
     );
   }
 }
