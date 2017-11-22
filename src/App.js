@@ -48,7 +48,7 @@ class App extends Component {
           {tasks.filter(({ completed }) => {
             if (current === 'done') return completed
             else if (current === 'not yet') return !completed
-            else if (current === 'all') return true
+            else return true
           }).
             map(({ id, completed, description }) => (
               <li
