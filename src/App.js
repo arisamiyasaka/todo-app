@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MyForm from './components/MyForm'
 import ToggleButton from './components/ToggleButton'
-import Todo from './components/Todo'
+import TodoList from './components/TodoList'
 import v4 from 'uuid/v4'
 
 
@@ -36,7 +36,6 @@ class App extends Component {
       current: 'all',
     }
   }
-
   toggleTask(state, id) {
     const tasks = state.tasks.map(task => {
       if (task.id !== id) return { ...task }
@@ -46,7 +45,6 @@ class App extends Component {
     localStorage.setItem('myTodo', JSON.stringify(newState))
     return newState
   }
-
   addTask(description) {
     const tasks = [...this.state.tasks, { id: v4(), completed: false, description }]
     const newState = { ...this.state, tasks }
@@ -60,24 +58,10 @@ class App extends Component {
     return (
       <div>
         <MyForm myEvent={desc => this.addTask(desc)} />
-        <ul>
-          {tasks.filter(({ completed }) => {
-            switch (current) {
-              case 'done':
-                return completed
-              case 'not yet':
-                return !completed
-              default:
-                return true
-            }
-          }).
-            map((attr) => (
-              <Todo
-                attr={attr}
-                onClickHandler={() =>
-                  this.setState(this.toggleTask(this.state, attr.id))} />
-            ))}
-        </ul>
+        <TodoList
+          tasks={tasks}
+          current={current}
+          $parent={(id) => this.setState(this.toggleTask(this.state, id))} />
         <p>{this.state.current}</p>
         <ToggleButton onClick={() => this.setState(prev => {
           return { ...prev, current: 'done' }
