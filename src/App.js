@@ -63,15 +63,24 @@ class App extends Component {
           current={current}
           $parent={(id) => this.setState(this.toggleTask(this.state, id))} />
         <p>{this.state.current}</p>
-        <ToggleButton onClick={() => this.setState(prev => {
-          return { ...prev, current: 'done' }
-        })}>done</ToggleButton>
-        <ToggleButton onClick={() => this.setState(prev => {
-          return { ...prev, current: 'not yet' }
-        })}>not yet</ToggleButton>
-        <ToggleButton onClick={() => this.setState(prev => {
-          return { ...prev, current: 'all' }
-        })}>all</ToggleButton>
+
+        <ToggleButton
+          onClick={() => this.setState(prev => ({ ...prev, current: 'done' }))}
+        >
+          done
+        </ToggleButton>
+
+        <ToggleButton
+          onClick={() => this.setState(prev => ({ ...prev, current: 'not yet' }))}
+        >
+          not yet
+        </ToggleButton>
+
+        <ToggleButton
+          onClick={() => this.setState(prev => ({ ...prev, current: 'all' }))}
+        >
+          all
+        </ToggleButton>
       </div >
     );
   }
