@@ -3,7 +3,7 @@ import MyForm from './components/MyForm'
 import ToggleButton from './components/ToggleButton'
 import TodoList from './components/TodoList'
 import v4 from 'uuid/v4'
-import store from './store'
+import store, {addTodoAction, toggleTodoAction} from './store'
 
 class App extends Component {
   constructor(props) {
@@ -16,36 +16,20 @@ class App extends Component {
     }
 
     this.state = {
-      tasks: store.getState(),
       current: 'all',
     }
   }
-  toggleTask(state, id) {
-    const tasks = state.tasks.map(task => {
-      if (task.id !== id) return { ...task }
-      return { ...task, completed: !task.completed }
-    })
-    const newState = { ...state, tasks }
-    localStorage.setItem('myTodo', JSON.stringify(newState))
-    return newState
-  }
-  addTask(description) {
-    const tasks = [...this.state.tasks, { id: v4(), completed: false, description }]
-    const newState = { ...this.state, tasks }
-    localStorage.setItem('myTodo', JSON.stringify(newState))
-
-    this.setState(newState)
-  }
 
   render() {
-    const { tasks, current } = this.state
+    const { current } = this.state
+    const tasks = store.getState()
     return (
       <div>
         <MyForm myEvent={desc => this.addTask(desc)} />
         <TodoList
           tasks={tasks}
           current={current}
-          $parent={(id) => this.setState(this.toggleTask(this.state, id))} />
+          $parent={id => store.dispatch(toggleTodoAction(id))} />
         <p>{this.state.current}</p>
 
         <ToggleButton
