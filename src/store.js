@@ -6,12 +6,30 @@ const TYPE = {
   TOGGLE_TODO: 'TOGGLE_TODO',
 }
 
+const initialState = [
+  {
+    id: v4(),
+    description: 'My todo 1',
+    completed: false
+  },
+  {
+    id: v4(),
+    description: 'My todo 2',
+    completed: false
+  },
+  {
+    id: v4(),
+    description: 'My todo 3',
+    completed: false
+  }
+]
+
 /* Actions */
 export const addTodoAction = ({description}) => ({ type: TYPE.ADD_TODO, payload: {description} })
 export const toggleTodoAction = id => ({ type: TYPE.TOGGLE_TODO, payload: {id}})
 
 /* Reducers */
-const todoListReducer = (state = [], {type, payload}) => {
+const todoListReducer = (state = initialState, {type, payload}) => {
   switch (type) {
     case TYPE.ADD_TODO:
       return [...state, {id: v4(), description: payload.description, completed: false}]
