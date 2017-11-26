@@ -1,4 +1,4 @@
-import {createStore} from 'redux'
+import { createStore } from 'redux'
 import v4 from 'uuid/v4'
 
 const TYPE = {
@@ -25,14 +25,14 @@ const initialState = [
 ]
 
 /* Actions */
-export const addTodoAction = ({description}) => ({ type: TYPE.ADD_TODO, payload: {description} })
-export const toggleTodoAction = id => ({ type: TYPE.TOGGLE_TODO, payload: {id}})
+export const addTodoAction = description => ({ type: TYPE.ADD_TODO, payload: { description } })
+export const toggleTodoAction = id => ({ type: TYPE.TOGGLE_TODO, payload: { id } })
 
 /* Reducers */
-const todoListReducer = (state = initialState, {type, payload}) => {
+const todoListReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case TYPE.ADD_TODO:
-      return [...state, {id: v4(), description: payload.description, completed: false}]
+      return [...state, { id: v4(), description: payload.description, completed: false }]
     case TYPE.TOGGLE_TODO:
       return state.map(todo => {
         if (todo.id !== payload.id) return todo

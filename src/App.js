@@ -3,7 +3,7 @@ import MyForm from './components/MyForm'
 import ToggleButton from './components/ToggleButton'
 import TodoList from './components/TodoList'
 import v4 from 'uuid/v4'
-import store, {addTodoAction, toggleTodoAction} from './store'
+import store, { addTodoAction, toggleTodoAction } from './store'
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class App extends Component {
     const tasks = store.getState()
     return (
       <div>
-        <MyForm myEvent={desc => this.addTask(desc)} />
+        <MyForm myEvent={desc => store.dispatch(addTodoAction(desc))} />
         <TodoList
           tasks={tasks}
           current={current}
