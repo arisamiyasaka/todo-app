@@ -15,7 +15,7 @@ const App = () => {
       <TodoList
         tasks={tasks}
         current={current}
-        $parent={id => store.dispatch(toggleTodoAction(id))} />
+      />
       <p>{current}</p>
 
       <ToggleButton
