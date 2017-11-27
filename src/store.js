@@ -29,18 +29,14 @@ export const addTodoAction = description => ({ type: TYPE.ADD_TODO, payload: { d
 export const toggleTodoAction = id => ({ type: TYPE.TOGGLE_TODO, payload: { id } })
 
 /* Reducers */
-const todoListReducer = (state = initialState, { type, payload }) => {
+const todoListReducer = (state = initialState, action) => {
+  const { type, payload } = action
   switch (type) {
     case TYPE.ADD_TODO:
       return [...state, { id: v4(), description: payload.description, completed: false }]
     case TYPE.TOGGLE_TODO:
       return state.map(todo => {
-        if (todo.id !== payload.id) return todo
-
-        return {
-          ...todo,
-          completed: !todo.completed
-        }
+        return todoReducer(todo, action)
       })
     default:
       return state
@@ -50,11 +46,14 @@ const todoListReducer = (state = initialState, { type, payload }) => {
 /* Init Store */
 export default createStore(todoListReducer)
 
-/* TODO: todoListReducerの中に入っている、個別のTodoに対する処理を
-   todoReducerに移譲する
 const todoReducer = (state, action) => {
+  if (state.id !== action.payload.id) return state
+
+  return {
+    ...state,
+    completed: !state.completed
+  }
 }
-*/
 
 /* TODO:
   * Reducerを1ファイル1Reducerの単位で reducers/ 以下にファイルを分割する。ファイル名はReducerの変数名と同一にする。
