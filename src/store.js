@@ -1,6 +1,6 @@
 import { createStore } from 'redux'
-import { todoListReducer } from './reducers/todoListReducer'
+import rootReducer from './reducers'
 
 /* Init Store */
-export default createStore(todoListReducer)
+export default createStore(rootReducer)
 
