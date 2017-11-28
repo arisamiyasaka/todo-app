@@ -2,6 +2,8 @@ import { createStore } from 'redux'
 import rootReducer from './reducers'
 
 /* Init Store */
+
+/* logging middleware */
 const addLoggingToDispatch = (store) => {
   const rawDispatch = store.dispatch
 
@@ -17,8 +19,23 @@ const addLoggingToDispatch = (store) => {
   }
 }
 
+/* recoginize Promise object middleware */
+const addPromiseSupportToDispatch = (store) => {
+  const rawDispatch = store.dispatch
+  return (action) => {
+    // action.then -> isPromise なら
+    if (typeof action.then === 'function') {
+      return action.then(rawDispatch)
+    } else {
+      return rawDispatch(action)
+    }
+  }
+}
+
+/* recoPromise() -> addLogging() -> original */
 let store = createStore(rootReducer)
 store.dispatch = addLoggingToDispatch(store)
+store.dispatch = addPromiseSupportToDispatch(store)
 
 export default store
 

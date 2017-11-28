@@ -5,7 +5,7 @@ import { toggleTodoAction } from '../actions'
 const asyncProc = (id) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(id)
+      resolve(toggleTodoAction(id))
     }, 500)
   })
 }
@@ -14,13 +14,8 @@ export default ({ attr: { id, completed, description }, $parent }) => (
   <li
     style={{ textDecoration: completed ? 'line-through' : 'none' }}
     onClick={() => {
-      asyncProc(id)
-        .then((asyncId) => {
-          console.log('async =', asyncId)
-          store.dispatch(toggleTodoAction(asyncId))
-        })
-    }
-    }
+      store.dispatch(asyncProc(id))
+    }}
   >
     {description}
   </li>
