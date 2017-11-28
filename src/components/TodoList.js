@@ -1,7 +1,7 @@
 import React from 'react'
 import Todo from './Todo'
 
-export default ({ tasks, current, $parent }) => (
+export default ({ tasks, current }) => (
   <ul>
     {tasks.filter(({ completed }) => {
       switch (current) {
@@ -16,8 +16,7 @@ export default ({ tasks, current, $parent }) => (
       map((attr) => (
         <Todo
           key={attr.id}
-          attr={attr}
-          $parent={$parent} />
+          attr={attr} />
       ))}
   </ul>
 )
