@@ -1,4 +1,4 @@
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers'
 
 /* Logging middleware */
@@ -24,18 +24,9 @@ const addPromiseSupportToDispatch = (store) => (rawDispatch) => (action) => {
   }
 }
 
-const wrapDispatchWithMiddlewares = (store, middlewares) => {
-  middlewares.slice().reverse().forEach(middleware =>
-    store.dispatch = middleware(store)(store.dispatch)
-  )
-}
-
 const middlewares = [addPromiseSupportToDispatch, addLoggingToDispatch]
 
 /* Init Store */
-let store = createStore(rootReducer)
-
-/* Wrap Dispatch(Similler Apply middlewares) */
-wrapDispatchWithMiddlewares(store, middlewares)
+let store = createStore(rootReducer, applyMiddleware(...middlewares))
 
 export default store
