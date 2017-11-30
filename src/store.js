@@ -16,3 +16,8 @@ const middlewares = [thunk, addPromiseSupportToDispatch, addLoggingToDispatch]
 let store = createStore(rootReducer, applyMiddleware(...middlewares))
 
 export default store
+
+/*
+ * Work: actions/index.js 内の Action creator を書き換えて、
+ * Promise をサポートするmiddlewareを取り除いて下さい。
+*/
