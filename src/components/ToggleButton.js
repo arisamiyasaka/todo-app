@@ -6,10 +6,8 @@ const ToggleButton = ({type, children, current}) => (
   <button onClick={() => current(type)}>{children}</button>
 )
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    current: (type) => dispatch(currentAction(type)),
-  }
+const mapDispatchToProps = {
+  current: currentAction
 }
 
 export default connect(undefined, mapDispatchToProps)(ToggleButton)

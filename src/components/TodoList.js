@@ -25,18 +25,13 @@ const TodoList = ({current, todoList, toggleTodo}) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  const {current, todoList} = state
-  return {
-    current: current,
-    todoList: todoList,
-  }
-}
+const mapStateToProps = ({current, todoList}) => ({
+  current: current,
+  todoList: todoList,
+})
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleTodo: (id) => dispatch(toggleTodoAction(id)),
-  }
+const mapDispatchToProps = {
+  toggleTodo: toggleTodoAction
 }
 
 /** MEMO:

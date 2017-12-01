@@ -16,10 +16,8 @@ const MyForm = ({addTodo}) => {
   )
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addTodo: (desc) => dispatch(addTodoAction(desc))
-  }
+const mapDispatchToProps = {
+  addTodo: addTodoAction
 }
 
 /** MEMO: Stete を持たない場合は第一引数を undefined とする。 null は絶対に渡さない。 */
