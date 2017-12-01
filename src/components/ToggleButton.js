@@ -1,7 +1,7 @@
 import React from 'react'
+import store from '../store'
+import { currentAction } from '../actions'
 
-export default ({ children, onClick }) => {
-  return (
-    <button onClick={onClick}>{children}</button>
-  )
-}
+export default ({type, children}) => (
+  <button onClick={() => store.dispatch(currentAction(type))}>{children}</button>
+)

@@ -1,12 +1,14 @@
 import React from 'react'
+import store from '../store'
+import { addTodoAction } from '../actions'
 
-export default ({ myEvent }) => {
-  let input = null
+export default () => {
+  let input = ''
   return (
     <div>
       <input type="text" ref={node => input = node} />
       <button onClick={() => {
-        myEvent(input.value)
+        store.dispatch(addTodoAction(input.value))
         input.value = ''
       }
       }>Add</button>
