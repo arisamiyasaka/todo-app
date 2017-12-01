@@ -1,7 +1,15 @@
 import React from 'react'
-import store from '../store'
 import { currentAction } from '../actions'
+import {connect} from 'react-redux'
 
-export default ({type, children}) => (
-  <button onClick={() => store.dispatch(currentAction(type))}>{children}</button>
+const ToggleButton = ({type, children, current}) => (
+  <button onClick={() => current(type)}>{children}</button>
 )
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    current: (type) => dispatch(currentAction(type)),
+  }
+}
+
+export default connect(undefined, mapDispatchToProps)(ToggleButton)

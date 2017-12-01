@@ -1,17 +1,26 @@
 import React from 'react'
-import store from '../store'
 import { addTodoAction } from '../actions'
+import {connect} from 'react-redux'
 
-export default () => {
+const MyForm = ({addTodo}) => {
   let input = ''
   return (
     <div>
       <input type="text" ref={node => input = node} />
       <button onClick={() => {
-        store.dispatch(addTodoAction(input.value))
+        addTodo(input.value)
         input.value = ''
       }
       }>Add</button>
     </div>
   )
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTodo: (desc) => dispatch(addTodoAction(desc))
+  }
+}
+
+/** MEMO: Stete を持たない場合は第一引数を undefined とする。 null は絶対に渡さない。 */
+export default connect(undefined, mapDispatchToProps)(MyForm)
