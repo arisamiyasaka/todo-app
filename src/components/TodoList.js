@@ -1,6 +1,7 @@
 import React from 'react'
 import Todo from './Todo'
 import store from '../store'
+import { toggleTodoAction } from '../actions'
 
 export default () => {
   const {current, todoList} = store.getState()
@@ -15,12 +16,12 @@ export default () => {
           default:
             return true
         }
-      }).
-        map((attr) => (
-          <Todo
-            key={attr.id}
-            attr={attr} />
-        ))}
+      }).map((attr) => (
+        <Todo
+          onClick={() => store.dispatch(toggleTodoAction(attr.id))}
+          key={attr.id}
+          attr={attr} />
+      ))}
     </ul>
   )
 }
