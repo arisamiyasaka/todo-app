@@ -11,7 +11,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 ReactDOM.render((
   <div>
     <Provider store={store}>
-      <App />
+      <Router>
+        <Route path='/:filter?' component={App} />
+      </Router>
     </Provider>
   </div>
 ), document.getElementById('root'));

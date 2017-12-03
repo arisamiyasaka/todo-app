@@ -3,11 +3,11 @@ import Todo from './Todo'
 import { toggleTodoAction } from '../actions'
 import {connect} from 'react-redux'
 
-const TodoList = ({current, todoList, toggleTodo}) => {
+const TodoList = ({filter, todoList, toggleTodo}) => {
   return (
     <ul>
       {todoList.filter(({ completed }) => {
-        switch (current) {
+        switch (filter) {
           case 'done':
             return completed
           case 'not yet':
@@ -25,10 +25,13 @@ const TodoList = ({current, todoList, toggleTodo}) => {
   )
 }
 
-const mapStateToProps = ({current, todoList}) => ({
-  current: current,
-  todoList: todoList,
-})
+const mapStateToProps = ({current, todoList}, ownProps) => {
+  const {filter} = ownProps
+  return {
+    todoList: todoList,
+    filter: filter,
+  }
+}
 
 const mapDispatchToProps = {
   toggleTodo: toggleTodoAction
