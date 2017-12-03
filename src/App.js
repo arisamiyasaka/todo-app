@@ -3,10 +3,10 @@ import MyForm from './components/MyForm'
 import ToggleButton from './components/ToggleButton'
 import TodoList from './components/TodoList'
 
-const App = ({match}) => (
+const App = () => (
   <div>
     <MyForm />
-    <TodoList filter={match.params.filter || 'all'} />
+    <TodoList />
     <ToggleButton type={'done'}>done</ToggleButton>
     <ToggleButton type={'not yet'}>not yet</ToggleButton>
     <ToggleButton type={'all'}>all</ToggleButton>
