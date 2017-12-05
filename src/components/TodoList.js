@@ -2,12 +2,13 @@ import React from 'react'
 import Todo from './Todo'
 import { toggleTodoAction } from '../actions'
 import {connect} from 'react-redux'
+import {withRouter} from 'react-router'
 
-const TodoList = ({current, todoList, toggleTodo}) => {
+const TodoList = ({filter, todoList, toggleTodo}) => {
   return (
     <ul>
       {todoList.filter(({ completed }) => {
-        switch (current) {
+        switch (filter) {
           case 'done':
             return completed
           case 'not yet':
@@ -25,10 +26,13 @@ const TodoList = ({current, todoList, toggleTodo}) => {
   )
 }
 
-const mapStateToProps = ({current, todoList}) => ({
-  current: current,
-  todoList: todoList,
-})
+const mapStateToProps = ({current, todoList}, ownProps) => {
+  const {match} = ownProps
+  return {
+    todoList: todoList,
+    filter: match.params.filter || 'all',
+  }
+}
 
 const mapDispatchToProps = {
   toggleTodo: toggleTodoAction
@@ -39,4 +43,4 @@ const mapDispatchToProps = {
  * 二つ目の関数にstore.dispatch()を渡します。
  * そしてその返り値をコンポーネントの Props に挿入します。
  */
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TodoList))
