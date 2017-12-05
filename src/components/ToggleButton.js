@@ -1,7 +1,8 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
-export default ({ children, onClick }) => {
-  return (
-    <button onClick={onClick}>{children}</button>
-  )
-}
+const ToggleButton = ({type, children}) => (
+  <Link to={type === 'all' ? '' : type}>{children}</Link>
+)
+
+export default ToggleButton
